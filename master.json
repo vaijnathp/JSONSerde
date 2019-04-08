@@ -1,0 +1,163 @@
+[
+    {
+        "transformation": {
+            "info": {
+                "name": "Run Transformation",
+                "size_rowset": "10000",
+                "sleep_time_empty": "50",
+                "sleep_time_full": "50",
+                "unique_connections": "N",
+                "feedback_shown": "Y",
+                "feedback_size": "50000",
+                "batchsize": "10000",
+                "fetchsize": "10000",
+                "executor-memory": "4g",
+                "cores": "4"
+            }
+        }
+    },
+    {
+        "order": {
+            "hop": [
+                {
+                    "step-name": "input1",
+                    "input-operation": "",
+                    #"output-operation": "Join",
+                    "enabled": "Y"
+                },
+				{
+                    "step-name": "input2",
+                    "input-operation": "",
+                    #"output-operation": "Join",
+                    "enabled": "Y"
+                },
+                {
+                    "step-name": "Join",
+                    "input-operation": [ "input1", "input2"]
+                    #"output-operation": "result",
+                    "enabled": "Y"
+                },
+                {
+                    "step-name": "output",
+                    "input-operation": "Join",
+                    #"output-operation": "",
+                    "enabled": "Y"
+                }
+            ]
+        },
+        "step": [
+            {
+                "input": [
+                    {
+                        "filename": "File-path1",
+						"step-name": "input1",
+                        "delimiter": ",",
+                        "type": "CsvInput",
+                        "include_filename": "N",
+                        "enclosure": "\"",
+                        "header": "Y",
+                        "buffer_size": "50000"
+						"schema": [
+							{
+								"Name": "abc"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "pqr"
+								"DataTye" : "String"
+							}
+						]
+                    },
+					{
+                        "filename": "File-path2",
+						"step-name": "input2",
+                        "delimiter": ",",
+                        "type": "CsvInput",
+                        "include_filename": "N",
+                        "enclosure": "\"",
+                        "header": "Y",
+                        "buffer_size": "50000"
+						"schema": [
+							{
+								"Name": "a1"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "b1" 
+								"DataTye" : "String"
+							}
+						]
+                    }
+                ]
+            },
+            {
+                "Join" : {
+					"step-name": "Join",
+					"InputStep": [
+						{
+							"StepName" : "input1"
+						},
+						{
+							"StepName" : "input2"
+						}
+					]
+					
+					"schema": [
+							{
+								"Name": "abc"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "pqr"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "a1"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "b1" 
+								"DataTye" : "String"
+							}
+						]
+					"keys" : [
+							{
+								"Name": "abc"
+								"StepName" : "input1"
+							},
+							{
+								"Name": "a1"
+								"StepName" : "input2"
+							}
+						]							
+				}
+            },
+			{
+				"output" : {
+					"filename": "output-file-path",
+					"step-name": "output",
+                    "delimiter": ",",
+                    "type": "CsvInput",
+                    "include_filename": "N",
+                    "enclosure": "\"",
+                    "header": "Y",
+					"schema": [
+							{
+								"Name": "abc"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "pqr"
+								"DataTye" : "String"
+							},
+							{
+								"Name": "a1"
+								"DataTye" : "String"
+							}
+						]
+				}
+			}
+			
+        ]
+    }
+]
