@@ -93,15 +93,7 @@
             {
                 "Join" : {
 					"step-name": "Join",
-					"InputStep": [
-						{
-							"StepName" : "input1"
-						},
-						{
-							"StepName" : "input2"
-						}
-					]
-					
+					"InputStep": [ "input1", "input2"]
 					"schema": [
 							{
 								"Name": "abc"
